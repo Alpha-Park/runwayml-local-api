@@ -1,10 +1,10 @@
 {
-  "name": "puppeteer-runway-test",
+  "name": "runwayml-local-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Spins up a RunwayML API locally",
   "main": "./src/index.ts",
   "scripts": {
-    "test": "dotenv tsx ./src/index.ts"
+    "start": "dotenv tsx ./src/index.ts"
   },
   "author": "Leo Wang",
   "devDependencies": {
