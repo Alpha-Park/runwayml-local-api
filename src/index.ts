@@ -1,32 +1,21 @@
 import puppeteer from "puppeteer";
+import { login } from "./functions/login";
+import { genImage } from "./functions/genImage";
 
 const main = async () => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
-  await page.goto("https://developer.chrome.com/");
-
-  // Set screen size
+  await page.goto("https://app.runwayml.com/");
   await page.setViewport({ width: 1080, height: 1024 });
 
-  // Type into search box
-  await page.type(".search-box__input", "automate beyond recorder");
-
-  // Wait and click on first result
-  const searchResultSelector = ".search-box__link";
-  await page.waitForSelector(searchResultSelector);
-  await page.click(searchResultSelector);
-
-  // Locate the full title with a unique string
-  const textSelector = await page.waitForSelector(
-    "text/Customize and automate"
+  await login(page);
+  await genImage(
+    page,
+    "You are a designer, imagine the use case for the product, design a high resolution 8k concept image. Text generated: This product is a multi-function corner desk with adjustable height, storage drawers, USB ports, and a choice of desktop materials and colors. Make the style more modern and minimalistic."
   );
-  const fullTitle = await textSelector?.evaluate((el) => el.textContent);
 
-  // Print the full title
-  console.log('The title of this blog post is "%s".', fullTitle);
-
-  await browser.close();
+  // await browser.close();
 };
 
 main();
